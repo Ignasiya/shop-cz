@@ -15,7 +15,7 @@ export const CategoriesList: FC = observer(() => {
   return (
     <section>
       <div className='flex justify-between max-w-md'>
-        <h2 className='text-2xl font-semibold'>Категории товаров</h2>
+        <h2 className='text-xl font-semibold'>Категории товаров</h2>
         <button className='text-blue-600 text-sm'>Настройки</button>
       </div>
 

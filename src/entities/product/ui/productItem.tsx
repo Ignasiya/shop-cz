@@ -1,17 +1,21 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { buttonColors, colorClasses } from '@/shared/lib/colors'
-import { categoryStore } from '../category'
-import { ProductPieces } from './types'
+import { categoryStore } from '../../category'
+import { ProductPieces } from '../types'
+import { cartStore } from '@/entities/cart'
+import { observer } from 'mobx-react-lite'
 
 type ProductProps = {
   product: ProductPieces
 }
 
-export function ProductItem({ product }: ProductProps) {
+export const ProductItem = observer(({ product }: ProductProps) => {
   const color = buttonColors[(product.category_id - 1) % buttonColors.length]
   const classes = colorClasses[color]
   const category = categoryStore.categories.find(({ id }) => id === product.category_id)
+
+  const isInCart = cartStore.hasItem(product.id)
 
   return (
     <article className='flex flex-col gap-1'>
@@ -25,7 +29,7 @@ export function ProductItem({ product }: ProductProps) {
             alt={product.images[0].image_name}
             fill
             className='object-cover object-top'
-            sizes='100vw'
+            sizes='100%'
           />
         </div>
 
@@ -46,9 +50,13 @@ export function ProductItem({ product }: ProductProps) {
         </p>
       </Link>
 
-      <button className='mt-2 px-8 py-2 rounded-full text-blue-500 border-1 hover:text-white hover:bg-blue-500 cursor-pointer transition-all'>
-        Добавить в корзину
+      <button
+        disabled={isInCart}
+        onClick={() => cartStore.addToCart(product)}
+        className='mt-2 px-8 py-2 rounded-full text-blue-500 border-1 hover:text-white hover:bg-blue-500 cursor-pointer transition-all disabled:bg-neutral-500 disabled:text-white disabled:cursor-default'
+      >
+        {isInCart ? 'В корзине' : 'Добавить в корзину'}
       </button>
     </article>
   )
-}
+})

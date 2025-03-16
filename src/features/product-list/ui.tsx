@@ -1,6 +1,6 @@
 import { categoryStore } from '@/entities/category'
 import { productStore } from '@/entities/product'
-import { ProductItem } from '@/entities/product/ui'
+import { ProductItem } from '@/entities/product'
 import { Loader } from '@/shared/ui/Loader'
 import { observer } from 'mobx-react-lite'
 import { FC, useEffect, useRef } from 'react'

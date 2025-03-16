@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 import { getCategories } from './api'
 import { Category } from './types'
 import { Id } from '@/shared/api/instance'
@@ -12,7 +12,11 @@ class CategoryStore {
   }
 
   async fetchCategories() {
-    this.categories = await getCategories()
+    const categories = await getCategories()
+
+    runInAction(() => {
+      this.categories = categories
+    })
   }
 
   setSelectedCategory(categoryId: Id | null) {

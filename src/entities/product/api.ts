@@ -1,4 +1,4 @@
-import { getList, Id, Params, Range } from '@/shared/api/instance'
+import { getById, getList, Id, Params, Range } from '@/shared/api/instance'
 import { ProductSchema, ProductImagesSchema, ProductVariationSchema } from './types'
 import { z } from 'zod'
 
@@ -8,6 +8,11 @@ export const getProducts = async (range: Range, categoryId: Id | null) => {
 
   const response = await getList('products', params)
   return z.array(ProductSchema).parse(response)
+}
+
+export const getProduct = async (productId: Id) => {
+  const response = await getById('products', productId)
+  return ProductSchema.parse(response)
 }
 
 export const getProductsVariations = async (productsId: Id | Id[]) => {
