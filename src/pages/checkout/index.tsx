@@ -34,8 +34,8 @@ function Checkout() {
     formState: { errors }
   } = useForm({ mode: 'onBlur', resolver: yupResolver(schema) })
 
-  const onSubmit = data => {
-    console.log('Заказ отправлен:', data)
+  const onSubmit = () => {
+    console.log('Заказ отправлен:')
     cartStore.clearCart()
     router.push('/products')
   }
